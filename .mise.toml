@@ -1,0 +1,39 @@
+[tools]
+go = "1.25.4"
+dagger = "0.20.8"
+
+[tasks.build]
+run = "go build -o bin/temporal-lsp ./cmd/temporal-lsp"
+description = "Build the temporal-lsp binary"
+
+[tasks.test]
+run = "go test ./..."
+description = "Run all tests"
+
+[tasks.lint]
+run = "golangci-lint run"
+description = "Run linter"
+
+[tasks.install]
+run = "go install ./cmd/temporal-lsp"
+description = "Install temporal-lsp to GOPATH/bin"
+
+[tasks.setup]
+run = "git config core.hooksPath .githooks"
+description = "Configure git to use project hooks"
+
+[tasks.check]
+run = "./.githooks/pre-commit"
+description = "Run all checks: unit tests + integration tests"
+
+[tasks.integration]
+run = "cd tests/integration && go test -v -timeout 600s ./..."
+description = "Run full integration suite: fixture validation + Neovim LSP end-to-end (requires Docker)"
+
+[tasks.demo]
+run = "docker build -f demo.Dockerfile -t temporal-lsp-demo . && docker run --rm --entrypoint sh -v $PWD:/out temporal-lsp-demo -c 'vhs demo.tape && cp demo.gif /out/demo.gif'"
+description = "Record demo.gif in Docker (no local dependencies needed)"
+
+[tasks.vscode-test]
+run = "mkdir -p tests/vscode/output && docker build -f tests/vscode/Dockerfile -t temporal-lsp-vscode-test . && docker run --rm -v $PWD/tests/vscode/output:/output temporal-lsp-vscode-test"
+description = "Run VS Code extension tests in Docker (screenshots + video)"

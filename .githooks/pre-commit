@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "==> Running pre-commit checks..."
+
+echo "  go build..."
+go build ./cmd/temporal-lsp/
+
+echo "  go vet..."
+go vet ./...
+
+echo "  go test (unit)..."
+go test ./...
+
+echo "==> All pre-commit checks passed."
+echo "    (integration tests run in CI via: mise run integration)"

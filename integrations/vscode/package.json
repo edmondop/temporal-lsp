@@ -1,0 +1,50 @@
+{
+  "name": "temporal-lsp",
+  "displayName": "Temporal LSP",
+  "description": "Detect Temporal workflow anti-patterns in Go and Python",
+  "version": "0.1.0",
+  "publisher": "edmondop",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edmondop/temporal-lsp"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:go"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Temporal LSP",
+      "properties": {
+        "temporalLsp.path": {
+          "type": "string",
+          "default": "temporal-lsp",
+          "description": "Path to the temporal-lsp binary"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1",
+    "vscode-languageserver-protocol": "^3.17.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "@types/vscode": "^1.75.0",
+    "@vscode/vsce": "^2.26.0",
+    "typescript": "^5.4.0"
+  }
+}

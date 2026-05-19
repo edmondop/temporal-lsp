@@ -1,0 +1,18 @@
+{
+  "temporalLsp.path": "/usr/local/bin/temporal-lsp",
+  "editor.fontSize": 18,
+  "terminal.integrated.fontSize": 16,
+  "problems.decorations.enabled": true,
+  "workbench.colorTheme": "Default Dark Modern",
+  "window.menuBarVisibility": "hidden",
+  "workbench.activityBar.visible": false,
+  "editor.minimap.enabled": false,
+  "workbench.statusBar.visible": true,
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
+  "chat.commandCenter.enabled": false,
+  "chat.editor.enabled": false,
+  "workbench.auxiliarySidebar.visible": false,
+  "workbench.secondarySideBar.visible": false,
+  "security.workspace.trust.enabled": false
+}

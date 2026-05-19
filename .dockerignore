@@ -1,0 +1,6 @@
+tests/vscode/output/
+tests/vscode/node_modules/
+integrations/vscode/node_modules/
+integrations/vscode/out/
+demo.gif
+.git/

@@ -1,0 +1,26 @@
+{
+  "name": "temporal-lsp",
+  "description": "Temporal workflow anti-pattern detection via LSP",
+  "owner": {
+    "name": "Edmondo Porcu"
+  },
+  "plugins": [
+    {
+      "name": "temporal-lsp",
+      "description": "Detects non-determinism, bad signatures, and workflow anti-patterns in Temporal workflows",
+      "version": "0.1.0",
+      "source": "./plugins/temporal-lsp",
+      "category": "development",
+      "lspServers": {
+        "temporal-lsp": {
+          "command": "temporal-lsp",
+          "args": ["--stdio"],
+          "extensionToLanguage": {
+            ".py": "temporal-python",
+            ".go": "temporal-go"
+          }
+        }
+      }
+    }
+  ]
+}

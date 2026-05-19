@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
+
+      - name: Run unit tests
+        run: mise run test
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
+
+      - name: Run integration tests
+        env:
+          DAGGER_CACHE_FROM: type=gha
+          DAGGER_CACHE_TO: type=gha,mode=max
+        run: mise run integration
+
+  vscode-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build VS Code test image
+        run: docker build -f tests/vscode/Dockerfile -t temporal-lsp-vscode-test .
+
+      - name: Run VS Code screenshot tests
+        run: |
+          mkdir -p tests/vscode/output
+          docker run --rm -v "$PWD/tests/vscode/output:/output" temporal-lsp-vscode-test
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vscode-screenshots
+          path: tests/vscode/output/
