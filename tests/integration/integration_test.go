@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"dagger.io/dagger"
 )
@@ -217,32 +218,44 @@ func TestGoFixturesAreRealTemporalWorkflows(t *testing.T) {
 	src := client.Host().Directory(projectRoot())
 
 	// Start Temporal dev server as a service (CLI dev server, no external DB needed)
+	// Skip health check — the verify binary handles readiness with retries
 	temporal := client.Container().
 		From("temporalio/admin-tools:1.30.4").
-		WithExposedPort(7233).
+		WithExposedPort(7233, dagger.ContainerWithExposedPortOpts{
+			ExperimentalSkipHealthcheck: true,
+		}).
 		WithExec([]string{"temporal", "server", "start-dev", "--ip", "0.0.0.0"}).
 		AsService()
 
-	// Build the verification binary
+	// Build the verification binary (static to avoid glibc issues on slim)
 	verifyBinary := client.Container().
 		From("golang:1.26-bookworm").
 		WithMountedCache("/go/pkg/mod", client.CacheVolume("go-mod")).
 		WithMountedCache("/root/.cache/go-build", client.CacheVolume("go-build")).
 		WithDirectory("/src", src).
 		WithWorkdir("/src/tests/integration/workers/verify_go_fixtures").
+		WithEnvVariable("CGO_ENABLED", "0").
 		WithExec([]string{"go", "build", "-o", "/out/verify", "."}).
 		File("/out/verify")
 
 	// Run the verification against real Temporal
+	// Use WithEnvVariable cacheBuster to prevent Dagger from caching this exec
 	result := client.Container().
 		From("debian:bookworm-slim").
 		WithFile("/usr/local/bin/verify", verifyBinary).
 		WithServiceBinding("temporal", temporal).
+		WithEnvVariable("CACHE_BUST", time.Now().String()).
 		WithExec([]string{"/usr/local/bin/verify", "temporal:7233"})
 
 	output, err := result.Stdout(ctx)
 	if err != nil {
-		t.Fatalf("Go fixture verification failed: %v", err)
+		stderr, _ := result.Stderr(ctx)
+		t.Fatalf("Go fixture verification failed: %v\nstderr: %s", err, stderr)
+	}
+
+	stderr, _ := result.Stderr(ctx)
+	if stderr != "" {
+		t.Logf("verify stderr:\n%s", stderr)
 	}
 
 	if !strings.Contains(output, "All Go fixtures verified") {
@@ -263,13 +276,17 @@ func TestPythonFixturesAreRealTemporalWorkflows(t *testing.T) {
 	src := client.Host().Directory(projectRoot())
 
 	// Start Temporal dev server as a service (CLI dev server, no external DB needed)
+	// Skip health check — the verify script handles readiness with retries
 	temporal := client.Container().
 		From("temporalio/admin-tools:1.30.4").
-		WithExposedPort(7233).
+		WithExposedPort(7233, dagger.ContainerWithExposedPortOpts{
+			ExperimentalSkipHealthcheck: true,
+		}).
 		WithExec([]string{"temporal", "server", "start-dev", "--ip", "0.0.0.0"}).
 		AsService()
 
 	// Python container with temporalio SDK, fixtures, and verification script
+	// Use WithEnvVariable cacheBuster to prevent Dagger from caching this exec
 	result := client.Container().
 		From("python:3.12-slim").
 		WithMountedCache("/root/.cache/pip", client.CacheVolume("pip")).
@@ -277,11 +294,13 @@ func TestPythonFixturesAreRealTemporalWorkflows(t *testing.T) {
 		WithDirectory("/testdata", src.Directory("internal/analyzer/testdata/python")).
 		WithFile("/verify.py", src.File("tests/integration/workers/verify_python_fixtures.py")).
 		WithServiceBinding("temporal", temporal).
+		WithEnvVariable("CACHE_BUST", time.Now().String()).
 		WithExec([]string{"python", "/verify.py", "temporal:7233"})
 
 	output, err := result.Stdout(ctx)
 	if err != nil {
-		t.Fatalf("Python fixture verification failed: %v", err)
+		stderr, _ := result.Stderr(ctx)
+		t.Fatalf("Python fixture verification failed: %v\nstderr: %s", err, stderr)
 	}
 
 	if !strings.Contains(output, "All fixtures verified") {

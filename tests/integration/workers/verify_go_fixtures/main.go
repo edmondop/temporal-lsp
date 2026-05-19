@@ -5,7 +5,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
+	"net"
 	"os"
 	"time"
 
@@ -17,59 +17,85 @@ import (
 	"verify_go_fixtures/signatures"
 )
 
+func logf(format string, args ...any) {
+	fmt.Fprintf(os.Stdout, "[verify] "+format+"\n", args...)
+}
+
 func main() {
 	if len(os.Args) < 2 {
-		log.Fatal("Usage: verify_go_fixtures <temporal_address>")
+		fmt.Println("Usage: verify_go_fixtures <temporal_address>")
+		os.Exit(1)
 	}
 	address := os.Args[1]
+	logf("Starting verification against %s (pid=%d)", address, os.Getpid())
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 	defer cancel()
 
-	// Retry connection for up to 20 seconds (Temporal might still be starting)
-	var c client.Client
-	var err error
-	for i := 0; i < 20; i++ {
-		c, err = client.Dial(client.Options{HostPort: address})
+	// Wait for TCP connectivity first (Temporal might still be starting)
+	logf("Waiting for TCP connectivity to %s...", address)
+	for i := 0; i < 60; i++ {
+		conn, err := net.DialTimeout("tcp", address, 2*time.Second)
 		if err == nil {
-			break
+			conn.Close()
+			logf("TCP connection successful after %d attempts", i+1)
+			goto connected
+		}
+		if i%5 == 0 {
+			logf("  TCP attempt %d: %v", i+1, err)
 		}
 		time.Sleep(time.Second)
 	}
+	logf("FATAL: TCP connection to %s failed after 60 attempts", address)
+	os.Exit(1)
+
+connected:
+	// Small delay for Temporal to finish initializing after port opens
+	time.Sleep(2 * time.Second)
+
+	logf("Creating Temporal client...")
+	c, err := client.Dial(client.Options{HostPort: address})
 	if err != nil {
-		log.Fatalf("Failed to connect to Temporal at %s: %v", address, err)
+		logf("FATAL: client.Dial failed: %v", err)
+		os.Exit(1)
 	}
+	logf("Temporal client created")
 	defer c.Close()
 
 	// Register determinism fixtures
+	logf("Registering determinism fixtures...")
 	w1 := worker.New(c, "verify-determinism", worker.Options{})
 	w1.RegisterWorkflow(determinism.MyWorkflow)
 	w1.RegisterWorkflow(determinism.TransitiveWorkflow)
-	fmt.Println("OK: determinism fixtures registered")
+	logf("OK: determinism fixtures registered")
 
 	// Register signature fixtures
+	logf("Registering signature fixtures...")
 	w2 := worker.New(c, "verify-signatures", worker.Options{})
 	w2.RegisterWorkflow(signatures.BadWorkflow)
 	w2.RegisterActivity(signatures.BadActivity)
 	w2.RegisterWorkflow(signatures.GoodWorkflow)
 	w2.RegisterActivity(signatures.GoodActivity)
-	fmt.Println("OK: signature fixtures registered")
+	logf("OK: signature fixtures registered")
 
 	// Register pattern fixtures
+	logf("Registering pattern fixtures...")
 	w3 := worker.New(c, "verify-patterns", worker.Options{})
 	w3.RegisterWorkflow(patterns.BadWorkflow)
 	w3.RegisterActivity(patterns.BadActivity)
 	w3.RegisterWorkflow(patterns.GoodWorkflow)
 	w3.RegisterActivity(patterns.GoodActivity)
-	fmt.Println("OK: pattern fixtures registered")
+	logf("OK: pattern fixtures registered")
 
 	// Start workers briefly to prove they can handle tasks
+	logf("Starting workers...")
 	go func() { _ = w1.Run(worker.InterruptCh()) }()
 	go func() { _ = w2.Run(worker.InterruptCh()) }()
 	go func() { _ = w3.Run(worker.InterruptCh()) }()
 
 	// Give workers a moment to start
 	time.Sleep(2 * time.Second)
+	logf("Workers started, executing GoodWorkflow...")
 
 	// Execute GoodWorkflow from signatures to prove it works end-to-end
 	run, err := c.ExecuteWorkflow(ctx, client.StartWorkflowOptions{
@@ -77,14 +103,17 @@ func main() {
 		TaskQueue: "verify-signatures",
 	}, signatures.GoodWorkflow, signatures.WorkflowInput{Name: "test", Age: 30})
 	if err != nil {
-		log.Fatalf("Failed to execute GoodWorkflow: %v", err)
+		logf("FATAL: Failed to execute GoodWorkflow: %v", err)
+		os.Exit(1)
 	}
+	logf("Workflow started (ID=%s, RunID=%s), waiting for result...", run.GetID(), run.GetRunID())
 
 	var result signatures.WorkflowResult
 	if err := run.Get(ctx, &result); err != nil {
-		log.Fatalf("GoodWorkflow execution failed: %v", err)
+		logf("FATAL: GoodWorkflow execution failed: %v", err)
+		os.Exit(1)
 	}
-	fmt.Printf("OK: GoodWorkflow executed, result=%+v\n", result)
+	logf("OK: GoodWorkflow executed, result=%+v", result)
 
 	fmt.Println("\nAll Go fixtures verified as real Temporal workflows.")
 	os.Exit(0)
