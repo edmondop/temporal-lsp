@@ -27,7 +27,7 @@ vim.diagnostic.config({
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "python", "go" },
+  pattern = { "python", "go", "java", "rust" },
   callback = function()
     vim.lsp.start({
       name = "temporal-lsp",

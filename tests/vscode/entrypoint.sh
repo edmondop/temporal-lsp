@@ -38,7 +38,10 @@ find /output -name "*.webm" -exec cp {} /output/ \; 2>/dev/null || true
 echo "Converting video to GIF..."
 VIDEO=$(find /output -maxdepth 1 -name "*.webm" | head -1)
 if [ -n "$VIDEO" ]; then
-  ffmpeg -i "$VIDEO" -vf "fps=10,scale=1400:-1" -y /output/vscode-demo.gif 2>/dev/null
+  if ! ffmpeg -i "$VIDEO" -vf "fps=12,scale=1400:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=5" -y /output/vscode-demo.gif 2>/dev/null; then
+    echo "GIF conversion failed (OOM?), run locally: ffmpeg -i output/video.webm -vf 'fps=12,scale=1400:-1' output/vscode-demo.gif"
+    exit 1
+  fi
 fi
 
 echo "Tests complete."

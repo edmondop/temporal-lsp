@@ -4,7 +4,9 @@
     "args": ["--stdio"],
     "extensionToLanguage": {
       ".py": "temporal-python",
-      ".go": "temporal-go"
+      ".go": "temporal-go",
+      ".java": "temporal-java",
+      ".rs": "temporal-rust"
     }
   }
 }

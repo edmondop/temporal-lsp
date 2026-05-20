@@ -1,11 +1,16 @@
 package server
 
 import (
+	"log"
+	"os"
+
 	"github.com/edmondop/temporal-lsp/internal/analyzer"
 	"github.com/tliron/glsp"
 	protocol "github.com/tliron/glsp/protocol_3_16"
 	glspserver "github.com/tliron/glsp/server"
 )
+
+var logger = log.New(os.Stderr, "[temporal-lsp] ", log.LstdFlags)
 
 const serverName = "temporal-lsp"
 
@@ -79,6 +84,7 @@ func (s *lspServer) analyze(ctx *glsp.Context, uri string, content []byte) {
 		}
 		violations, err := a.Analyze(uri, content)
 		if err != nil {
+			logger.Printf("analyzer error for %s: %v", uri, err)
 			continue
 		}
 		allViolations = append(allViolations, violations...)
@@ -104,6 +110,8 @@ func (s *lspServer) analyze(ctx *glsp.Context, uri string, content []byte) {
 			Code:     &protocol.IntegerOrString{Value: v.RuleID},
 		})
 	}
+
+	logger.Printf("publishing %d diagnostics for %s", len(diagnostics), uri)
 
 	ctx.Notify(string(protocol.ServerTextDocumentPublishDiagnostics), protocol.PublishDiagnosticsParams{
 		URI:         protocol.DocumentUri(uri),

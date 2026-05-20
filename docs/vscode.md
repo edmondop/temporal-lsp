@@ -16,4 +16,4 @@ Then set the LSP binary path in your settings (optional if `temporal-lsp` is on 
 
 Diagnostics appear as squiggly underlines with full messages in the Problems panel:
 
-![VS Code demo](../demos/vscode-demo.gif)
+![VS Code demo](../demos/vscode.gif)

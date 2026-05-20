@@ -10,7 +10,7 @@ if not configs.temporal_lsp then
   configs.temporal_lsp = {
     default_config = {
       cmd = { 'temporal-lsp' },
-      filetypes = { 'go', 'python' },
+      filetypes = { 'go', 'python', 'java', 'rust' },
       root_dir = lspconfig.util.root_pattern('go.mod', 'pyproject.toml', '.git'),
       settings = {},
     },

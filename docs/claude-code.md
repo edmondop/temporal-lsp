@@ -14,7 +14,7 @@ Restart Claude Code after installation.
 
 ## How it works
 
-temporal-lsp runs as an LSP server alongside your existing language servers (Pyright, gopls, etc.). It uses distinct language IDs (`temporal-python`, `temporal-go`) to avoid collisions with other LSP plugins.
+temporal-lsp runs as an LSP server alongside your existing language servers (Pyright, gopls, rust-analyzer, etc.). It uses distinct language IDs (`temporal-python`, `temporal-go`, `temporal-java`, `temporal-rust`) to avoid collisions with other LSP plugins.
 
 Diagnostics appear automatically when Claude Code reads or edits workflow files:
 

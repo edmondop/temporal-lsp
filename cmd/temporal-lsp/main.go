@@ -8,14 +8,14 @@ import (
 )
 
 func main() {
-	handler := server.NewHandler(
-		analyzer.NewGoDeterminismAnalyzer(),
-		analyzer.NewGoSignatureAnalyzer(),
-		analyzer.NewGoPatternAnalyzer(),
-		analyzer.NewPythonDeterminismAnalyzer(),
-		analyzer.NewPythonSignatureAnalyzer(),
-		analyzer.NewPythonPatternAnalyzer(),
+	analyzers := analyzer.AllAnalyzers(
+		analyzer.Go{},
+		analyzer.Python{},
+		analyzer.Java{},
+		analyzer.Rust{},
 	)
+
+	handler := server.NewHandler(analyzers...)
 	srv := server.NewServer(handler)
 
 	if err := srv.RunStdio(); err != nil {
