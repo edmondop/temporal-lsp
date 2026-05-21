@@ -34,8 +34,8 @@ RUN code-server --install-extension /tmp/temporal-lsp.vsix
 RUN mkdir -p /root/.local/share/code-server/User
 COPY tests/vscode/settings.json /root/.local/share/code-server/User/settings.json
 
-# Copy test fixtures as workspace
-COPY internal/analyzer/testdata/python /workspace/
+# Copy focused demo workspace files (one violation per file, all flat)
+COPY tests/vscode/workspace/ /workspace/
 
 # Set up Playwright
 WORKDIR /playwright

@@ -3,3 +3,4 @@ temporal-lsp
 /verify_go_fixtures
 .DS_Store
 tests/vscode/output/
+internal/analyzer/testdata/python/__pycache__/

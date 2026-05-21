@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/activity-timeout-required",
+    "message": "Set StartToCloseTimeout or ScheduleToCloseTimeout in ActivityOptions before calling ExecuteActivity",
+    "severity": 2,
+    "range": {
+      "startLine": 8,
+      "startCol": 9,
+      "endLine": 8,
+      "endCol": 9
+    }
+  },
+  {
+    "rule": "temporal/unbounded-loop",
+    "message": "Infinite loop without workflow.NewContinueAsNewError risks history growth; add ContinueAsNew",
+    "severity": 2,
+    "range": {
+      "startLine": 7,
+      "startCol": 1,
+      "endLine": 7,
+      "endCol": 1
+    }
+  }
+]

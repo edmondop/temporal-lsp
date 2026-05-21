@@ -73,7 +73,39 @@ Type ":q"
 Enter
 Sleep 500ms
 
+# --- Java: determinism violations ---
+Type "nvim internal/analyzer/testdata/java/BadWorkflow.java"
+Enter
+Sleep 3s
+
+Type ":lua vim.diagnostic.setloclist()"
+Enter
+Sleep 2s
+
+Type ":lclose"
+Enter
+Sleep 300ms
+Type ":q"
+Enter
+Sleep 500ms
+
+# --- Rust: determinism violations ---
+Type "nvim internal/analyzer/testdata/rust/bad_workflow.rs"
+Enter
+Sleep 3s
+
+Type ":lua vim.diagnostic.setloclist()"
+Enter
+Sleep 2s
+
+Type ":lclose"
+Enter
+Sleep 300ms
+Type ":q"
+Enter
+Sleep 500ms
+
 # Outro
-Type "echo 'More rules coming soon. PRs welcome.'"
+Type "echo '4 languages supported: Python, Go, Java, Rust. PRs welcome.'"
 Enter
 Sleep 2s

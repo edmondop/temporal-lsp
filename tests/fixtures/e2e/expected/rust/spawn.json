@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-goroutine",
+    "message": "Use Temporal's async primitives instead of spawning threads/tasks in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 4,
+      "startCol": 4,
+      "endLine": 4,
+      "endCol": 43
+    }
+  }
+]

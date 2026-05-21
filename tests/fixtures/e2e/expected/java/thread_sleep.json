@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-sleep",
+    "message": "Use Workflow.sleep() instead of Thread.sleep() in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 7,
+      "startCol": 8,
+      "endLine": 7,
+      "endCol": 26
+    }
+  }
+]

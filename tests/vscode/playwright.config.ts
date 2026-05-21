@@ -10,7 +10,7 @@ export default defineConfig({
     deviceScaleFactor: 2,
     video: {
       mode: "on",
-      dir: "/output/videos",
+      size: { width: 1400, height: 900 },
     },
     screenshot: "on",
   },

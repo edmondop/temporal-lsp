@@ -1,0 +1,46 @@
+[
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity functions should accept a single parameter (use a dataclass for multiple values)",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 14,
+      "endLine": 6,
+      "endCol": 14
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a dataclass instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 14,
+      "endLine": 6,
+      "endCol": 14
+    }
+  },
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity functions should accept a single parameter (use a dataclass for multiple values)",
+    "severity": 2,
+    "range": {
+      "startLine": 11,
+      "startCol": 10,
+      "endLine": 11,
+      "endCol": 10
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a dataclass instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 11,
+      "startCol": 10,
+      "endLine": 11,
+      "endCol": 10
+    }
+  }
+]

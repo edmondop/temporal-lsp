@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/edmondop/temporal-lsp/internal/analyzer"
+	"github.com/edmondop/temporal-lsp/internal/analyzer/rules"
 	"github.com/sourcegraph/jsonrpc2"
 	"github.com/tliron/glsp"
 	protocol "github.com/tliron/glsp/protocol_3_16"
@@ -59,7 +59,7 @@ func (nc *notificationCollector) waitFor(method string, timeout time.Duration) *
 	return nil
 }
 
-func startTestServer(t *testing.T, analyzers ...analyzer.Analyzer) (*jsonrpc2.Conn, *notificationCollector) {
+func startTestServer(t *testing.T, analyzers ...rules.Analyzer) (*jsonrpc2.Conn, *notificationCollector) {
 	t.Helper()
 
 	clientConn, serverConn := net.Pipe()
@@ -135,25 +135,25 @@ func TestInitializeReturnsTextDocumentSyncCapability(t *testing.T) {
 }
 
 type fakeAnalyzer struct {
-	violations []analyzer.Violation
+	violations []rules.Violation
 }
 
 func (f *fakeAnalyzer) Supports(_ string, _ []byte) bool {
 	return true
 }
 
-func (f *fakeAnalyzer) Analyze(_ string, _ []byte) ([]analyzer.Violation, error) {
+func (f *fakeAnalyzer) Analyze(_ string, _ []byte) ([]rules.Violation, error) {
 	return f.violations, nil
 }
 
 func TestDidOpenPublishesDiagnosticsFromAnalyzer(t *testing.T) {
 	fake := &fakeAnalyzer{
-		violations: []analyzer.Violation{
+		violations: []rules.Violation{
 			{
-				RuleID:   "temporal/no-time-now",
+				RuleID:   rules.NoTimeNow,
 				Message:  "Use workflow.Now() instead of time.Now()",
 				Severity: 2,
-				Range: analyzer.Range{
+				Range: rules.Range{
 					StartLine: 5,
 					StartCol:  4,
 					EndLine:   5,

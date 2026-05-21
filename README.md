@@ -49,20 +49,21 @@ These detect non-deterministic operations inside workflow code:
 
 | Rule ID | Description |
 |---------|-------------|
-| `temporal/no-time-now` | Use `workflow.Now()` / `workflow.now()` instead of `time.Now()` / `datetime.now()` |
-| `temporal/no-sleep` | Use `workflow.Sleep()` / `workflow.sleep()` instead of `time.Sleep()` / `time.sleep()` |
-| `temporal/no-random` | Use `workflow.SideEffect()` / `workflow.random()` instead of `math/rand` / `random.*` |
-| `temporal/no-io` | Move network/IO calls (`http.Get`, `requests.*`, `open()`) to activities |
-| `temporal/no-goroutine` | Use `workflow.Go()` / managed tasks instead of goroutines / `threading.Thread` |
-| `temporal/no-mutex` | Use `workflow.Mutex` instead of `sync.Mutex` / `threading.Lock` |
+| `temporal/no-time-now` | Use workflow time APIs instead of `time.Now()` / `datetime.now()` / `System.currentTimeMillis()` / `SystemTime::now()` |
+| `temporal/no-sleep` | Use workflow sleep instead of `time.Sleep()` / `time.sleep()` / `Thread.sleep()` / `thread::sleep()` |
+| `temporal/no-random` | Use workflow randomness instead of `math/rand` / `random.*` / `Math.random()` / `rand::*` |
+| `temporal/no-io` | Move network/IO calls to activities |
+| `temporal/no-goroutine` | Use workflow-managed concurrency instead of raw threads/goroutines |
+| `temporal/no-mutex` | Use workflow primitives instead of `sync.Mutex` / `threading.Lock` / `ReentrantLock` / `Mutex::new` |
 | `temporal/no-channel` | Use `workflow.Channel` / signals instead of native channels / `queue.Queue` |
 | `temporal/no-env-access` | Environment variables break determinism; pass config as workflow input |
 | `temporal/no-standard-logging` | Use `workflow.logger` instead of `logging` / `print` (avoids replay noise) |
 
 Go determinism detection uses Temporal's own
 [workflowcheck](https://pkg.go.dev/go.temporal.io/sdk/contrib/tools/workflowcheck)
-analyzer (including transitive non-determinism). Python uses tree-sitter AST analysis
-scoped to `@workflow.run` methods.
+analyzer (including transitive non-determinism). Python, Java, and Rust use tree-sitter
+AST analysis scoped to workflow entry points (`@workflow.run`, `@WorkflowMethod`,
+`#[workflow_run]`).
 
 ### Signatures (Tier 2)
 
@@ -102,7 +103,9 @@ mise run vscode-test # Run VS Code extension tests (screenshots + video)
 
 - **Go determinism**: Uses `workflowcheck` from Temporal SDK as a library via `golang.org/x/tools/go/analysis/checker`
 - **Python determinism**: Tree-sitter Python grammar, scoped to `@workflow.defn` + `@workflow.run` decorated code
-- **Signature checks**: Go uses `go/ast`; Python uses tree-sitter — both are lightweight, no type info needed
+- **Java determinism**: Tree-sitter Java grammar, scoped to `@WorkflowMethod` annotated methods
+- **Rust determinism**: Tree-sitter Rust grammar, scoped to `#[workflow_run]` attributed functions
+- **Signature checks**: Go uses `go/ast`; Python/Java/Rust use tree-sitter — lightweight, no type info needed
 
 ## Limitations
 

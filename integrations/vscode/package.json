@@ -1,7 +1,7 @@
 {
   "name": "temporal-lsp",
   "displayName": "Temporal LSP",
-  "description": "Detect Temporal workflow anti-patterns in Go and Python",
+  "description": "Detect Temporal workflow anti-patterns in Go, Python, Java, and Rust",
   "version": "0.1.0",
   "publisher": "edmondop",
   "repository": {
@@ -17,7 +17,9 @@
   ],
   "activationEvents": [
     "onLanguage:python",
-    "onLanguage:go"
+    "onLanguage:go",
+    "onLanguage:java",
+    "onLanguage:rust"
   ],
   "main": "./out/extension.js",
   "contributes": {

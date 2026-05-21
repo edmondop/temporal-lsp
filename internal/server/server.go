@@ -1,19 +1,24 @@
 package server
 
 import (
-	"github.com/edmondop/temporal-lsp/internal/analyzer"
+	"log"
+	"os"
+
+	"github.com/edmondop/temporal-lsp/internal/analyzer/rules"
 	"github.com/tliron/glsp"
 	protocol "github.com/tliron/glsp/protocol_3_16"
 	glspserver "github.com/tliron/glsp/server"
 )
 
+var logger = log.New(os.Stderr, "[temporal-lsp] ", log.LstdFlags)
+
 const serverName = "temporal-lsp"
 
 type lspServer struct {
-	analyzers []analyzer.Analyzer
+	analyzers []rules.Analyzer
 }
 
-func NewHandler(analyzers ...analyzer.Analyzer) *protocol.Handler {
+func NewHandler(analyzers ...rules.Analyzer) *protocol.Handler {
 	s := &lspServer{analyzers: analyzers}
 
 	handler := &protocol.Handler{}
@@ -71,7 +76,7 @@ func (s *lspServer) textDocumentDidSave(ctx *glsp.Context, params *protocol.DidS
 }
 
 func (s *lspServer) analyze(ctx *glsp.Context, uri string, content []byte) {
-	var allViolations []analyzer.Violation
+	var allViolations []rules.Violation
 
 	for _, a := range s.analyzers {
 		if !a.Supports(uri, content) {
@@ -79,6 +84,7 @@ func (s *lspServer) analyze(ctx *glsp.Context, uri string, content []byte) {
 		}
 		violations, err := a.Analyze(uri, content)
 		if err != nil {
+			logger.Printf("analyzer error for %s: %v", uri, err)
 			continue
 		}
 		allViolations = append(allViolations, violations...)
@@ -101,9 +107,11 @@ func (s *lspServer) analyze(ctx *glsp.Context, uri string, content []byte) {
 			Severity: &severity,
 			Source:   strPtr(serverName),
 			Message:  v.Message,
-			Code:     &protocol.IntegerOrString{Value: v.RuleID},
+			Code:     &protocol.IntegerOrString{Value: string(v.RuleID)},
 		})
 	}
+
+	logger.Printf("publishing %d diagnostics for %s", len(diagnostics), uri)
 
 	ctx.Notify(string(protocol.ServerTextDocumentPublishDiagnostics), protocol.PublishDiagnosticsParams{
 		URI:         protocol.DocumentUri(uri),

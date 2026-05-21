@@ -1,0 +1,35 @@
+[
+  {
+    "rule": "temporal/no-standard-logging",
+    "message": "Use workflow.logger instead of standard logging (avoids duplicate messages during replay)",
+    "severity": 1,
+    "range": {
+      "startLine": 10,
+      "startCol": 8,
+      "endLine": 10,
+      "endCol": 41
+    }
+  },
+  {
+    "rule": "temporal/no-standard-logging",
+    "message": "Use workflow.logger instead of standard logging (avoids duplicate messages during replay)",
+    "severity": 1,
+    "range": {
+      "startLine": 11,
+      "startCol": 8,
+      "endLine": 11,
+      "endCol": 34
+    }
+  },
+  {
+    "rule": "temporal/no-standard-logging",
+    "message": "Use workflow.logger instead of standard logging (avoids duplicate messages during replay)",
+    "severity": 1,
+    "range": {
+      "startLine": 12,
+      "startCol": 8,
+      "endLine": 12,
+      "endCol": 22
+    }
+  }
+]

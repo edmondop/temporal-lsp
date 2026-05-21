@@ -20,6 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
     documentSelector: [
       { scheme: "file", language: "python" },
       { scheme: "file", language: "go" },
+      { scheme: "file", language: "java" },
+      { scheme: "file", language: "rust" },
     ],
   };
 

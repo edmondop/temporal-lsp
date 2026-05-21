@@ -1,0 +1,35 @@
+[
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity functions should accept a single struct parameter for forwards compatibility",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 5,
+      "endLine": 6,
+      "endCol": 5
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a struct instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 5,
+      "endLine": 6,
+      "endCol": 5
+    }
+  },
+  {
+    "rule": "temporal/single-return",
+    "message": "Workflow/activity functions should return at most (result, error) — wrap multiple values in a struct",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 5,
+      "endLine": 6,
+      "endCol": 5
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-env-access",
+    "message": "Environment variables are non-deterministic; pass configuration as workflow input",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 15,
+      "endLine": 8,
+      "endCol": 39
+    }
+  }
+]

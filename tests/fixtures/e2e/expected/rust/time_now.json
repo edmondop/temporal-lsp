@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-time-now",
+    "message": "Use workflow time utilities instead of SystemTime/Instant in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 5,
+      "startCol": 16,
+      "endLine": 5,
+      "endCol": 30
+    }
+  }
+]
