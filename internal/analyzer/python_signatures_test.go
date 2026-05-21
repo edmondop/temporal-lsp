@@ -45,7 +45,7 @@ func TestPythonSignatureAnalyzerDetectsBadSignatures(t *testing.T) {
 		}
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}

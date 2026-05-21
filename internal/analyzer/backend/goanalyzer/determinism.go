@@ -1,4 +1,4 @@
-package analyzer
+package goanalyzer
 
 import (
 	"go/token"
@@ -10,22 +10,20 @@ import (
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/checker"
 	"golang.org/x/tools/go/packages"
+
+	"github.com/edmondop/temporal-lsp/internal/analyzer/rules"
 )
 
-type GoDeterminismAnalyzer struct{}
+type DeterminismAnalyzer struct{}
 
-func NewGoDeterminismAnalyzer() *GoDeterminismAnalyzer {
-	return &GoDeterminismAnalyzer{}
-}
-
-func (a *GoDeterminismAnalyzer) Supports(uri string, content []byte) bool {
+func (a *DeterminismAnalyzer) Supports(uri string, content []byte) bool {
 	if !strings.HasSuffix(uri, ".go") {
 		return false
 	}
-	return strings.Contains(string(content), `"go.temporal.io/sdk/workflow"`)
+	return strings.Contains(string(content), rules.GoSDKImport)
 }
 
-func (a *GoDeterminismAnalyzer) Analyze(uri string, content []byte) ([]Violation, error) {
+func (a *DeterminismAnalyzer) Analyze(uri string, content []byte) ([]rules.Violation, error) {
 	dir := findModuleDir(uriToPath(uri))
 	if dir == "" {
 		return nil, nil
@@ -45,7 +43,7 @@ func (a *GoDeterminismAnalyzer) Analyze(uri string, content []byte) ([]Violation
 	}
 
 	filePath := uriToPath(uri)
-	var violations []Violation
+	var violations []rules.Violation
 
 	for act := range graph.All() {
 		if act.Err != nil {
@@ -60,17 +58,14 @@ func (a *GoDeterminismAnalyzer) Analyze(uri string, content []byte) ([]Violation
 			if diag.End != token.NoPos {
 				endPos = act.Package.Fset.Position(diag.End)
 			}
-			violations = append(violations, Violation{
-				RuleID:   "temporal/non-deterministic",
-				Message:  diag.Message,
-				Severity: 1,
-				Range: Range{
+			violations = append(violations, rules.NonDeterminism.
+				WithMessage(diag.Message).
+				At(rules.Range{
 					StartLine: pos.Line - 1,
 					StartCol:  pos.Column - 1,
 					EndLine:   endPos.Line - 1,
 					EndCol:    endPos.Column - 1,
-				},
-			})
+				}))
 		}
 	}
 

@@ -37,12 +37,12 @@ func TestJavaDeterminismAnalyzerDetectsBannedCalls(t *testing.T) {
 		t.Fatalf("Analyze failed: %v", err)
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}
 
-	expected := []string{
+	expected := []ID{
 		"temporal/no-time-now",
 		"temporal/no-sleep",
 		"temporal/no-random",

@@ -1,26 +1,11 @@
 package analyzer
 
-type Range struct {
-	StartLine int
-	StartCol  int
-	EndLine   int
-	EndCol    int
-}
+import "github.com/edmondop/temporal-lsp/internal/analyzer/rules"
 
-type Fix struct {
-	NewText string
-}
+type ID = rules.ID
 
-type Violation struct {
-	RuleID    string
-	Message   string
-	Severity  int // 1=Error, 2=Warning
-	Range     Range
-	Reference string
-	Fix       *Fix
-}
+type Range = rules.Range
 
-type Analyzer interface {
-	Supports(uri string, content []byte) bool
-	Analyze(uri string, content []byte) ([]Violation, error)
-}
+type Violation = rules.Violation
+
+type Analyzer = rules.Analyzer

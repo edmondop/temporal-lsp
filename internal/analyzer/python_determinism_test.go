@@ -45,12 +45,12 @@ func TestPythonDeterminismAnalyzerDetectsBannedCalls(t *testing.T) {
 		}
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}
 
-	expected := map[string]bool{
+	expected := map[ID]bool{
 		"temporal/no-time-now":  true,
 		"temporal/no-sleep":    true,
 		"temporal/no-random":   true,
@@ -92,7 +92,7 @@ func TestPythonDeterminismAnalyzerHandlesDirectImport(t *testing.T) {
 		}
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}
@@ -119,7 +119,7 @@ func TestPythonDeterminismAnalyzerDetectsEnvAccess(t *testing.T) {
 		t.Fatalf("Analyze failed: %v", err)
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}
@@ -146,7 +146,7 @@ func TestPythonDeterminismAnalyzerDetectsStandardLogging(t *testing.T) {
 		t.Fatalf("Analyze failed: %v", err)
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}

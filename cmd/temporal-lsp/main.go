@@ -8,14 +8,7 @@ import (
 )
 
 func main() {
-	analyzers := analyzer.AllAnalyzers(
-		analyzer.Go{},
-		analyzer.Python{},
-		analyzer.Java{},
-		analyzer.Rust{},
-	)
-
-	handler := server.NewHandler(analyzers...)
+	handler := server.NewHandler(analyzer.AllAnalyzers()...)
 	srv := server.NewServer(handler)
 
 	if err := srv.RunStdio(); err != nil {

@@ -20,7 +20,7 @@ func TestRustSignatureAnalyzerDetectsBadSignatures(t *testing.T) {
 		t.Fatalf("Analyze failed: %v", err)
 	}
 
-	ruleCount := map[string]int{}
+	ruleCount := map[ID]int{}
 	for _, v := range violations {
 		ruleCount[v.RuleID]++
 	}
