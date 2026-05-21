@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-mutex",
+    "message": "Temporal workflows are single-threaded; remove lock/Mutex usage",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 18,
+      "endLine": 8,
+      "endCol": 38
+    }
+  }
+]

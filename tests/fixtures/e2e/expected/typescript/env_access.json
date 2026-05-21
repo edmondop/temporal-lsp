@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-env-access",
+    "message": "Move environment access to an activity or workflow config",
+    "severity": 1,
+    "range": {
+      "startLine": 3,
+      "startCol": 9,
+      "endLine": 3,
+      "endCol": 25
+    }
+  }
+]

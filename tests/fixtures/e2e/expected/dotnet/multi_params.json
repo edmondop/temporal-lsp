@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity methods should accept a single parameter object (use a record/class for multiple values)",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 30,
+      "endLine": 6,
+      "endCol": 30
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a record/class instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 6,
+      "startCol": 30,
+      "endLine": 6,
+      "endCol": 30
+    }
+  }
+]

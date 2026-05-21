@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-time-now",
+    "message": "Use Workflow.UtcNow instead of DateTime.Now/UtcNow in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 18,
+      "endLine": 8,
+      "endCol": 30
+    }
+  }
+]

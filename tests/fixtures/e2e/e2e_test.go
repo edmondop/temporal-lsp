@@ -40,6 +40,8 @@ func TestE2E(t *testing.T) {
 		{"python", "*.py"},
 		{"java", "*.java"},
 		{"rust", "*.rs"},
+		{"dotnet", "*.cs"},
+		{"typescript", "*.ts"},
 	}
 
 	for _, lang := range languages {
@@ -187,6 +189,30 @@ var expectedRulesByLanguage = map[string][]rules.ID{
 		rules.PrimitiveParams,
 		rules.SingleReturn,
 	},
+	"dotnet": {
+		rules.NoTimeNow,
+		rules.NoSleep,
+		rules.NoRandom,
+		rules.NoIO,
+		rules.NoGoroutine,
+		rules.NoMutex,
+		rules.NoEnvAccess,
+		rules.NoStandardLogging,
+		rules.UnboundedLoop,
+		rules.SinglePayload,
+		rules.PrimitiveParams,
+	},
+	"typescript": {
+		rules.NoTimeNow,
+		rules.NoSleep,
+		rules.NoRandom,
+		rules.NoIO,
+		rules.NoEnvAccess,
+		rules.NoStandardLogging,
+		rules.UnboundedLoop,
+		rules.SinglePayload,
+		rules.PrimitiveParams,
+	},
 }
 
 func TestCoverageAllRulesHaveFixtures(t *testing.T) {
@@ -206,6 +232,10 @@ func TestCoverageAllRulesHaveFixtures(t *testing.T) {
 				glob = "*.java"
 			case "rust":
 				glob = "*.rs"
+			case "dotnet":
+				glob = "*.cs"
+			case "typescript":
+				glob = "*.ts"
 			}
 
 			covered := collectCoveredRules(t, root, lang, glob, isGo, analyzers)

@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/unbounded-loop",
+    "message": "Infinite loop without continueAsNew() risks history growth; add continueAsNew",
+    "severity": 2,
+    "range": {
+      "startLine": 3,
+      "startCol": 2,
+      "endLine": 5,
+      "endCol": 3
+    }
+  }
+]

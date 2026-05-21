@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-standard-logging",
+    "message": "Use workflow.log instead of console.log in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 3,
+      "startCol": 2,
+      "endLine": 3,
+      "endCol": 30
+    }
+  }
+]

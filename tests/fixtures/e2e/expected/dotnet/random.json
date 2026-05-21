@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-random",
+    "message": "Use Workflow.Random instead of System.Random in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 18,
+      "endLine": 8,
+      "endCol": 30
+    }
+  }
+]

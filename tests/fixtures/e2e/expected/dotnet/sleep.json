@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/no-sleep",
+    "message": "Use Workflow.DelayAsync() instead of Thread.Sleep or Task.Delay in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 8,
+      "endLine": 8,
+      "endCol": 26
+    }
+  },
+  {
+    "rule": "temporal/no-sleep",
+    "message": "Use Workflow.DelayAsync() instead of Thread.Sleep or Task.Delay in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 9,
+      "startCol": 14,
+      "endLine": 9,
+      "endCol": 49
+    }
+  }
+]
