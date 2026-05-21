@@ -1,0 +1,46 @@
+[
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity methods should accept a single parameter object (use a POJO for multiple values)",
+    "severity": 2,
+    "range": {
+      "startLine": 7,
+      "startCol": 11,
+      "endLine": 7,
+      "endCol": 11
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a POJO instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 7,
+      "startCol": 11,
+      "endLine": 7,
+      "endCol": 11
+    }
+  },
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity methods should accept a single parameter object (use a POJO for multiple values)",
+    "severity": 2,
+    "range": {
+      "startLine": 12,
+      "startCol": 12,
+      "endLine": 12,
+      "endCol": 12
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a POJO instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 12,
+      "startCol": 12,
+      "endLine": 12,
+      "endCol": 12
+    }
+  }
+]

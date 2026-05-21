@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/unbounded-loop",
+    "message": "Infinite loop without Workflow.continueAsNew() risks history growth; add continueAsNew",
+    "severity": 2,
+    "range": {
+      "startLine": 7,
+      "startCol": 8,
+      "endLine": 9,
+      "endCol": 9
+    }
+  }
+]

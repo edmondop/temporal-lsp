@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/no-random",
+    "message": "Use Workflow.newRandom() instead of Math.random() or Random in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 15,
+      "endLine": 8,
+      "endCol": 40
+    }
+  },
+  {
+    "rule": "temporal/no-random",
+    "message": "Use Workflow.newRandom() instead of Math.random() or Random in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 15,
+      "endLine": 8,
+      "endCol": 27
+    }
+  }
+]

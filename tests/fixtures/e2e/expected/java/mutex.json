@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/no-mutex",
+    "message": "Temporal workflows are single-threaded; remove lock/synchronized usage",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 8,
+      "endLine": 8,
+      "endCol": 34
+    }
+  },
+  {
+    "rule": "temporal/no-mutex",
+    "message": "Temporal workflows are single-threaded; remove lock/synchronized usage",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 8,
+      "endLine": 8,
+      "endCol": 27
+    }
+  }
+]

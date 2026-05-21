@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-time-now",
+    "message": "Use workflow.now() instead of datetime.now() or time.time() in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 14,
+      "endLine": 8,
+      "endCol": 37
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-io",
+    "message": "Move IO operations to an activity",
+    "severity": 1,
+    "range": {
+      "startLine": 4,
+      "startCol": 19,
+      "endLine": 4,
+      "endCol": 49
+    }
+  }
+]

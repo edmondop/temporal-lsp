@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-sleep",
+    "message": "Use Temporal's timer API instead of thread::sleep or tokio::time::sleep in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 6,
+      "startCol": 4,
+      "endLine": 6,
+      "endCol": 41
+    }
+  }
+]

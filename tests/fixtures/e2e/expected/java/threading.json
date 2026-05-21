@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/no-goroutine",
+    "message": "Use Async.function() or Async.procedure() instead of raw threads in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 7,
+      "startCol": 8,
+      "endLine": 7,
+      "endCol": 42
+    }
+  },
+  {
+    "rule": "temporal/no-goroutine",
+    "message": "Use Async.function() or Async.procedure() instead of raw threads in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 7,
+      "startCol": 8,
+      "endLine": 7,
+      "endCol": 34
+    }
+  }
+]

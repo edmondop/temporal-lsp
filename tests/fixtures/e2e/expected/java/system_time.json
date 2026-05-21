@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-time-now",
+    "message": "Use Workflow.currentTimeMillis() instead of system time in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 7,
+      "startCol": 15,
+      "endLine": 7,
+      "endCol": 41
+    }
+  }
+]

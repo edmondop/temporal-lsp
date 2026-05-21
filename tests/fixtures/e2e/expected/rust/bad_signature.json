@@ -1,0 +1,24 @@
+[
+  {
+    "rule": "temporal/single-payload",
+    "message": "Workflow/activity functions should accept a single struct parameter (use a struct for multiple values)",
+    "severity": 2,
+    "range": {
+      "startLine": 3,
+      "startCol": 9,
+      "endLine": 3,
+      "endCol": 9
+    }
+  },
+  {
+    "rule": "temporal/primitive-params",
+    "message": "Use a struct instead of multiple primitive parameters for workflow/activity inputs",
+    "severity": 2,
+    "range": {
+      "startLine": 3,
+      "startCol": 9,
+      "endLine": 3,
+      "endCol": 9
+    }
+  }
+]

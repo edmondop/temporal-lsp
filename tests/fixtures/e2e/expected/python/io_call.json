@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-io",
+    "message": "Move network/IO calls to an activity",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 19,
+      "endLine": 8,
+      "endCol": 36
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-channel",
+    "message": "Use workflow signals or workflow queues instead of queue/multiprocessing primitives",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 12,
+      "endLine": 8,
+      "endCol": 25
+    }
+  }
+]

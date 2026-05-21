@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-random",
+    "message": "Use workflow random utilities instead of rand in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 4,
+      "startCol": 14,
+      "endLine": 4,
+      "endCol": 32
+    }
+  }
+]

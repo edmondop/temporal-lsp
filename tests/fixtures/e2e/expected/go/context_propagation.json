@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-context-propagation",
+    "message": "Use the workflow context instead of context.Background()/context.TODO() in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 9,
+      "startCol": 10,
+      "endLine": 9,
+      "endCol": 10
+    }
+  }
+]

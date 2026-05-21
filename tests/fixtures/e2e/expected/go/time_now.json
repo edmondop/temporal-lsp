@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/non-deterministic",
+    "message": "example.com/workflows.ProcessOrder is non-deterministic, reason: calls non-deterministic function time.Now\n  time.Now is non-deterministic, reason: declared non-deterministic",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 5,
+      "endLine": 8,
+      "endCol": 5
+    }
+  }
+]
