@@ -103,10 +103,10 @@ func hasTimeoutKeyword(argList *sitter.Node, content []byte) bool {
 func isWhileTrue(whileNode *sitter.Node, content []byte) bool {
 	for i := 0; i < int(whileNode.ChildCount()); i++ {
 		child := whileNode.Child(i)
-		if child.Type() == "true" || child.Type() == "True" {
+		if child.Type() == rules.NodeTrue || child.Type() == rules.NodePythonTrue {
 			return true
 		}
-		if child.Type() == rules.NodeIdentifier && child.Content(content) == "True" {
+		if child.Type() == rules.NodeIdentifier && child.Content(content) == rules.NodePythonTrue {
 			return true
 		}
 	}

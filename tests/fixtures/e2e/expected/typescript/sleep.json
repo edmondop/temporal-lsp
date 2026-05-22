@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-sleep",
+    "message": "Use workflow.sleep() instead of setTimeout in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 3,
+      "startCol": 2,
+      "endLine": 3,
+      "endCol": 28
+    }
+  }
+]

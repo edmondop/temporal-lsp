@@ -41,3 +41,23 @@ const (
 	RustAttrWorkflow    = "workflow"
 	RustAttrActivity    = "activity"
 )
+
+const (
+	DotNetSDKNamespace = "Temporalio"
+	DotNetSDKImport    = "using Temporalio"
+)
+
+const (
+	DotNetAttrWorkflow    = "Workflow"
+	DotNetAttrWorkflowRun = "WorkflowRun"
+	DotNetAttrActivity    = "Activity"
+)
+
+const (
+	TypeScriptSDKImport = "@temporalio/workflow"
+)
+
+const (
+	TSDecoratorWorkflow = "workflow"
+	TSDecoratorRun      = "run"
+)

@@ -1,0 +1,13 @@
+[
+  {
+    "rule": "temporal/no-standard-logging",
+    "message": "Use Workflow.Logger instead of Console.Write in workflows",
+    "severity": 1,
+    "range": {
+      "startLine": 8,
+      "startCol": 8,
+      "endLine": 8,
+      "endCol": 42
+    }
+  }
+]
